@@ -16,13 +16,19 @@ using System.Windows.Shapes;
 namespace WorkTracker
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for WorkTrackerHome.xaml
     /// </summary>
-    public partial class MainWindow : NavigationWindow
+    public partial class WorkTrackerHome : Page
     {
-        public MainWindow()
+        public WorkTrackerHome()
         {
             InitializeComponent();
+        }
+
+        private void ViewButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddWorkPage page = new AddWorkPage(this.peopleListBox.SelectedItem);
+            this.NavigationService.Navigate(page);
         }
     }
 }

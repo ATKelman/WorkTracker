@@ -16,13 +16,19 @@ using System.Windows.Shapes;
 namespace WorkTracker
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddWorkPage.xaml
     /// </summary>
-    public partial class MainWindow : NavigationWindow
+    public partial class AddWorkPage : Page
     {
-        public MainWindow()
+        public AddWorkPage()
         {
             InitializeComponent();
+        }
+
+        public AddWorkPage(object data)
+            : this()
+        {
+            this.DataContext = data;
         }
     }
 }
