@@ -13,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WorkTracker
+namespace WorkTracker.Pages
 {
     /// <summary>
-    /// Interaction logic for AddWorkPage.xaml
+    /// Interaction logic for MainPage.xaml
     /// </summary>
-    public partial class AddWorkPage : Page
+    public partial class MainPage : Page
     {
-        public AddWorkPage()
+        public MainPage()
         {
             InitializeComponent();
-        }
-
-        public AddWorkPage(object data)
-            : this()
-        {
-            this.DataContext = data;
         }
     }
 }
