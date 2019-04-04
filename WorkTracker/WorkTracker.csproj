@@ -111,6 +111,11 @@
   <ItemGroup>
     <Resource Include="Pages\Content\What2.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Youtrack\Youtrack.csproj">
+      <Project>{412c7f6a-08ea-46a9-8b33-1724c55c87f8}</Project>
+      <Name>Youtrack</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

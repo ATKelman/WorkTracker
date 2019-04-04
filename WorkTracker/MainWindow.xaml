@@ -24,7 +24,7 @@
             <Button Content="New Case" Margin="5, 10, 5, 0" Click="changePage_CreateNewCase" />
             <Button Content="Edit Case" Margin="5, 10, 5, 0" Click="changePage_EditCase" />
             <Button Content="View Summary" Margin="5, 10, 5, 0" Click="changePage_ViewSummary" />
-            <Button Content="Text2" Margin="5, 10, 5, 0" />
+            <Button Content="Activities" Margin="5, 10, 5, 0" />
         </StackPanel>
         
         <Frame Grid.Column="1" Grid.Row="1" x:Name="MainContent"  NavigationUIVisibility="Hidden"/>
