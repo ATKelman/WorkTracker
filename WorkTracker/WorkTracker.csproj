@@ -106,9 +106,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Pages\Content\What2.jpg" />
   </ItemGroup>
   <ItemGroup>
