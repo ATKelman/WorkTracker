@@ -23,7 +23,7 @@ namespace Youtrack
         {
             try
             {
-                connection = new BearerTokenConnection("https://cgicfuskara.myjetbrains.com/youtrack", "perm:YWxleGFuZGVyLmtlbG1hbg==.V29ya1RyYWNrZXI=.B7p4sOpuQ57NcGMkkGWamrHMPz6Stz");
+                connection = new BearerTokenConnection("","");
                 return true;
             }
             catch (Exception ex)
