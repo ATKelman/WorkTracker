@@ -18,7 +18,7 @@ namespace WorkTracker.Pages
         {
             var youtrack = new Youtrack.Youtrack();
 
-            youtrack.GetIssues();
+            //youtrack.GetIssues();
         }
     }
 }

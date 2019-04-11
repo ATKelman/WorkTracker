@@ -1,64 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using YouTrackSharp;
+using Youtrack.Handlers;
 
 namespace Youtrack
 {
     public class Youtrack
     {
-        BearerTokenConnection connection;
+        private BearerTokenConnection connection;
 
         public Youtrack()
         {
             OpenConnection();
-            GetIssues();
         }
 
         private bool OpenConnection()
         {
             try
             {
-                connection = new BearerTokenConnection("","");
+                // Change so they are injected 
+                var uri = System.Configuration.ConfigurationManager.AppSettings["YoutrackUri"];
+                var token = System.Configuration.ConfigurationManager.AppSettings["YoutrackToken"];
+
+                connection = new BearerTokenConnection(uri, token);
                 return true;
             }
             catch (Exception ex)
             {
-                // Log
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
 
-        public void GetIssues()
-        {    
-            var query = "resolved date: {Last week} .. Today ";
+        // Issue
+        public YouTrackSharp.Issues.Issue GetIssue(string issueId) => IssueHandler.GetIssue(connection, issueId);
+        public ICollection<YouTrackSharp.Issues.Issue> GetIssues(string query) => IssueHandler.GetIssues(connection, query);
+        public bool CreateIssue(Classes.Issue issue) => IssueHandler.CreateIssue(connection, issue);
 
-            var Issues = connection.CreateIssuesService().GetIssues(query, take: 1000);
-            //var USersfirst = connection.CreateUserManagementService().GetUsers();
-            //var USerssecond = connection.CreateUserManagementService().GetUsers(start: 10);
-            //var Projects = connection.CreateProjectsService().GetAccessibleProjects();
-
-            Task[] tasks =
-            {
-                Issues
-                //USersfirst,
-                //USerssecond,
-                //Projects
-            };
-
-            Task.WaitAll(tasks);
-
-            var test = Issues.Result;
-            //var query = "resolved date: {Last week} .. Today ";
-            //var issues = connection.CreateIssuesService().GetIssues(query, take: 100);
-
-            //Task task = issues;
-            //Task.WaitAll(task);
-            //var test = issues;
-        }
+        // Project
+        public ICollection<YouTrackSharp.Projects.Project> GetProjects() => ProjectHandler.GetProjects(connection);
+        public YouTrackSharp.Projects.CustomField GetIssueCustomField(string projectId, string fieldId) => ProjectHandler.GetIssueCustomField(connection, projectId, fieldId);
+        public ICollection<YouTrackSharp.Projects.CustomField> GetCustomFields(string projectId) => ProjectHandler.GetIssueCustomFields(connection, projectId);
     }
 }
