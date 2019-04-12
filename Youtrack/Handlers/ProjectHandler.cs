@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Youtrack.Utilities;
 using YouTrackSharp;
 
 namespace Youtrack.Handlers
@@ -10,9 +8,7 @@ namespace Youtrack.Handlers
         // GetProjects
         public static ICollection<YouTrackSharp.Projects.Project> GetProjects(BearerTokenConnection connection)
         {
-            var task = connection.CreateProjectsService().GetAccessibleProjects();
-
-            var projects = Tasks.AwaitTask<ICollection<YouTrackSharp.Projects.Project>>(task);
+            var projects = connection.CreateProjectsService().GetAccessibleProjects();
 
             return projects.Result;
         }
@@ -20,9 +16,7 @@ namespace Youtrack.Handlers
         // GetProjectCustomField
         public static YouTrackSharp.Projects.CustomField GetIssueCustomField(BearerTokenConnection connection, string projectId, string fieldId)
         {
-            var task = connection.ProjectCustomFieldsService().GetProjectCustomField(projectId, fieldId);
-
-            var customField = Tasks.AwaitTask<YouTrackSharp.Projects.CustomField>(task);
+            var customField = connection.ProjectCustomFieldsService().GetProjectCustomField(projectId, fieldId);
 
             return customField.Result;
         }
@@ -30,9 +24,7 @@ namespace Youtrack.Handlers
         // GetProjectCustomFields
         public static ICollection<YouTrackSharp.Projects.CustomField> GetIssueCustomFields(BearerTokenConnection connection, string projectId)
         {
-            var task = connection.ProjectCustomFieldsService().GetProjectCustomFields(projectId);
-
-            var customFields = Tasks.AwaitTask<ICollection<YouTrackSharp.Projects.CustomField>>(task);
+            var customFields = connection.ProjectCustomFieldsService().GetProjectCustomFields(projectId);
 
             return customFields.Result;
         }

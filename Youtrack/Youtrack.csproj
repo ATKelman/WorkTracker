@@ -112,7 +112,6 @@
     <Compile Include="Handlers\IssueHandler.cs" />
     <Compile Include="Handlers\ProjectHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\Tasks.cs" />
     <Compile Include="Youtrack.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
 using Youtrack.Classes;
-using Youtrack.Utilities;
 using YouTrackSharp;
 
 namespace Youtrack.Handlers
@@ -11,27 +10,23 @@ namespace Youtrack.Handlers
         // GetIssue
         public static YouTrackSharp.Issues.Issue GetIssue(BearerTokenConnection connection, string issueId)
         {
-            var task = connection.CreateIssuesService().GetIssue(issueId);
-
-            var issue = Tasks.AwaitTask<YouTrackSharp.Issues.Issue>(task);
+            var issue = connection.CreateIssuesService().GetIssue(issueId);
 
             return issue.Result;
         }
 
-        // GetIssues 
+        // GetIssues
         public static ICollection<YouTrackSharp.Issues.Issue> GetIssues(BearerTokenConnection connection, string query)
         {
-            var task = connection.CreateIssuesService().GetIssues(query, take: 25);
-
-            var issues = Tasks.AwaitTask<ICollection<YouTrackSharp.Issues.Issue>>(task);
+            var issues = connection.CreateIssuesService().GetIssues(query, take: 25);
 
             return issues.Result;
         }
 
-        // CreateIssue 
+        // CreateIssue
         public static bool CreateIssue(BearerTokenConnection connection, Issue issue)
         {
-            // Create new YoutrackSharp Issue and Set Standard Fields 
+            // Create new YoutrackSharp Issue and Set Standard Fields
             var newIssue = new YouTrackSharp.Issues.Issue()
             {
                 Summary = issue.Summary,
@@ -44,11 +39,16 @@ namespace Youtrack.Handlers
                 newIssue.SetField(customField.Name, customField.Value);
             }
 
-            var task = connection.CreateIssuesService().CreateIssue("OTHER", newIssue);
+            try
+            {
+                connection.CreateIssuesService().CreateIssue("OTHER", newIssue).Wait();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
-            var issueCreation = Tasks.AwaitTask<string>(task);
-
-            return (issueCreation.Exception == null);
+            return true;
         }
 
         // EditIssue

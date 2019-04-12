@@ -17,8 +17,7 @@ namespace WorkTracker.Pages
         public void ApiThread()
         {
             var youtrack = new Youtrack.Youtrack();
-
-            //youtrack.GetIssues();
+            var issue = youtrack.GetIssue("OTHER-5");
         }
     }
 }
