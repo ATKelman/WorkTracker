@@ -11,13 +11,12 @@ namespace WorkTracker.Pages
 
             Thread youtrackApi = new Thread(ApiThread);
             youtrackApi.Start();
-
         }
 
         public void ApiThread()
         {
             var youtrack = new Youtrack.Youtrack();
-            var issue = youtrack.GetIssue("OTHER-5");
+            //var issue = youtrack.GetIssue("OTHER-5");
         }
     }
 }
