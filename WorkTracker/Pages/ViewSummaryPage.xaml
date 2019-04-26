@@ -9,6 +9,8 @@
       Title="ViewSummaryPage">
 
     <Grid>
-        
+        <StackPanel x:Name="IssuePanel" Background="LightBlue" >
+            
+        </StackPanel>
     </Grid>
 </Page>
