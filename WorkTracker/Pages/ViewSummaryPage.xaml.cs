@@ -20,17 +20,19 @@ namespace WorkTracker.Pages
         private YoutrackIssue[] displayIssues;
         private int pageCounter = 0;
 
+        private Dictionary<string, List<YouTrackSharp.Projects.CustomField>> projects;
+
         public ViewSummaryPage(int youtrackIssuesCount)
         {
             InitializeComponent();
 
-            InitializeYoutrackIssues(youtrackIssuesCount);
+            DisplayIssuesSetup(youtrackIssuesCount);
 
-            Thread youtrackApi = new Thread(YoutrackSetup);
-            youtrackApi.Start();
+            Thread youtrackSetup = new Thread(YoutrackSetup);
+            youtrackSetup.Start();
         }
 
-        private void InitializeYoutrackIssues(int youtrackIssuesCount)
+        private void DisplayIssuesSetup(int youtrackIssuesCount)
         {
             displayIssues = new YoutrackIssue[youtrackIssuesCount];
             for (int i = 0; i < youtrackIssuesCount; i++)
@@ -47,7 +49,21 @@ namespace WorkTracker.Pages
             youtrack = new Youtrack.Youtrack();
             issues = (IList<YouTrackSharp.Issues.Issue>)youtrack.GetIssues("#{Assigned to me}");
 
-            PreviousButton.IsEnabled = false;
+            projects = new Dictionary<string, List<YouTrackSharp.Projects.CustomField>>();
+
+            // Get all types of projects 
+            foreach (var issue in issues)
+            {
+                var projectName = issue.GetField("projectShortName").Value.ToString();
+                if (projects.ContainsKey(projectName))
+                    continue;
+
+                // Retrieve all CustomFields for the Project
+                var customFields = (List<YouTrackSharp.Projects.CustomField>)youtrack.GetCustomFields(projectName);
+
+                projects.Add(projectName, customFields);
+            }
+
             FillPage(pageCounter);
         }
 

@@ -18,7 +18,7 @@ namespace Youtrack.Handlers
         // GetIssues
         public static ICollection<YouTrackSharp.Issues.Issue> GetIssues(BearerTokenConnection connection, string query)
         {
-            var issues = connection.CreateIssuesService().GetIssues(query, take: 25);
+            var issues = connection.CreateIssuesService().GetIssues(query);
 
             return issues.Result;
         }

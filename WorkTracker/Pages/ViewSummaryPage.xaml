@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <Button x:Name="PreviousButton" Content="P" Grid.Column="0" Height="50" 
-                Margin="5, 0, 5, 0" Click="ButtonPressed" Tag="-1"/>
+                Margin="5, 0, 5, 0" Click="ButtonPressed" Tag="-1" IsEnabled="False"/>
       
         <Button x:Name="NextButton" Content="N" Grid.Column="4" Height="50" 
                 Margin="5, 0, 5, 0" Click="ButtonPressed" Tag="1"/>
