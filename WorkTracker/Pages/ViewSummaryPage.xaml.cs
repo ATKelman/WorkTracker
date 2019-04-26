@@ -24,22 +24,25 @@ namespace WorkTracker.Pages
 
         private const int IssuesPerPage = 3;
 
-        public ViewSummaryPage(int youtrackIssuesCount)
+        public ViewSummaryPage(int youtrackIssueCount, int youtrackIssueWidth, int youtrackIssueHeight)
         {
             InitializeComponent();
 
-            DisplayIssuesSetup(youtrackIssuesCount);
+            DisplayIssuesSetup(youtrackIssueCount, youtrackIssueWidth, youtrackIssueHeight);
 
             Thread youtrackSetup = new Thread(YoutrackSetup);
             youtrackSetup.Start();
         }
 
-        private void DisplayIssuesSetup(int youtrackIssuesCount)
+        private void DisplayIssuesSetup(int youtrackIssueCount, int youtrackIssueWidth, int youtrackIssueHeight)
         {
-            displayIssues = new YoutrackIssue[youtrackIssuesCount];
-            for (int i = 0; i < youtrackIssuesCount; i++)
+            displayIssues = new YoutrackIssue[youtrackIssueCount];
+            for (int i = 0; i < youtrackIssueCount; i++)
             {
                 displayIssues[i] = new YoutrackIssue();
+
+                displayIssues[i].Height = youtrackIssueHeight;
+                displayIssues[i].Width = youtrackIssueWidth;
 
                 SummaryGrid.Children.Add(displayIssues[i]);
                 Grid.SetColumn(displayIssues[i], i + 1);
@@ -78,9 +81,6 @@ namespace WorkTracker.Pages
                     var issueCount = (pageCount * IssuesPerPage) + i;
                     if (issues.Count > issueCount)
                     {
-                        displayIssues[i].MaxHeight = 350;
-                        displayIssues[i].MaxWidth = 180;
-
                         displayIssues[i].HeaderText.Text = issues[issueCount].Summary;
                         displayIssues[i].DescriptionText.Text = issues[issueCount].Description;
 

@@ -26,7 +26,8 @@ namespace WorkTracker
 
         private void changePage_ViewSummary(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new ViewSummaryPage(3);
+            // TODO make width and height of youtrack issue be decided by page size, buttons take 1* each while issues take 3* each
+            MainContent.Content = new ViewSummaryPage(3, 180, 300);
         }
 
         private void changePage_MainPage(object sender, RoutedEventArgs e)
