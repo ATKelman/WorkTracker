@@ -26,7 +26,7 @@ namespace WorkTracker
 
         private void changePage_ViewSummary(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new ViewSummaryPage();
+            MainContent.Content = new ViewSummaryPage(3);
         }
 
         private void changePage_MainPage(object sender, RoutedEventArgs e)

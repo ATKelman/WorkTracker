@@ -4,6 +4,8 @@ using Youtrack;
 using WorkTracker.UserControls;
 using System.Windows;
 using System;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace WorkTracker.Pages
 {
@@ -13,50 +15,75 @@ namespace WorkTracker.Pages
     public partial class ViewSummaryPage : Page
     {
         private Youtrack.Youtrack youtrack;
+        private IList<YouTrackSharp.Issues.Issue> issues;
 
+        private YoutrackIssue[] displayIssues;
+        private int pageCounter = 0;
 
-        public ViewSummaryPage()
+        public ViewSummaryPage(int youtrackIssuesCount)
         {
             InitializeComponent();
 
-            Thread youtrackApi = new Thread(ApiThread);
-            //youtrackApi.SetApartmentState(ApartmentState.STA);
+            InitializeYoutrackIssues(youtrackIssuesCount);
+
+            Thread youtrackApi = new Thread(YoutrackSetup);
             youtrackApi.Start();
         }
 
-        private void ApiThread()
+        private void InitializeYoutrackIssues(int youtrackIssuesCount)
         {
-            youtrack = new Youtrack.Youtrack();
-            RetrieveIssue();
+            displayIssues = new YoutrackIssue[youtrackIssuesCount];
+            for (int i = 0; i < youtrackIssuesCount; i++)
+            {
+                displayIssues[i] = new YoutrackIssue();
+
+                SummaryGrid.Children.Add(displayIssues[i]);
+                Grid.SetColumn(displayIssues[i], i + 1);
+            }
         }
 
-        // Retrieve Information 
-        private void RetrieveIssue()
+        private void YoutrackSetup()
         {
-            var issue = youtrack.GetIssue("OTHER-5");
+            youtrack = new Youtrack.Youtrack();
+            issues = (IList<YouTrackSharp.Issues.Issue>)youtrack.GetIssues("#{Assigned to me}");
+            FillPage(0);
+        }
 
+        private void FillPage(int pageCount)
+        {
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
-                var element = new YoutrackIssue();
-                element.HeaderLabel.Content = issue.Summary;
-                element.DescriptionLabel.Content = issue.Description;
+                for (int i = 0; i < 3; i++)
+                {
+                    var issueCount = (pageCount * 3) + i;
+                    if (issues.Count > issueCount)
+                    {
+                        displayIssues[i].MaxHeight = 350;
+                        displayIssues[i].MaxWidth = 180;
 
-                element.MaxHeight = 350;
-                element.MaxWidth = 180;
+                        displayIssues[i].HeaderText.Text = issues[issueCount].Summary;
+                        displayIssues[i].DescriptionText.Text = issues[issueCount].Description;
 
-                SummaryGrid.Children.Add(element);
-                Grid.SetColumn(element, 1);
+                        displayIssues[i].Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        displayIssues[i].Visibility = Visibility.Hidden;
+                    }
+                }
+            });
+        }
 
-                var element2 = new YoutrackIssue();
-                element2.HeaderLabel.Content = issue.Summary;
-                element2.DescriptionLabel.Content = issue.Description;
+        private void PreviousButtonClick(object sender, RoutedEventArgs e)
+        {
+            pageCounter = Math.Max((pageCounter - 1), 0);
+            FillPage(pageCounter);
+        }
 
-                element2.MaxHeight = 350;
-                element2.MaxWidth = 180;
-
-                SummaryGrid.Children.Add(element2);
-                Grid.SetColumn(element2, 2);
-            });         
+        private void NextButtonClick(object sender, RoutedEventArgs e)
+        {
+            pageCounter++;
+            FillPage(pageCounter);
         }
     }
 }
