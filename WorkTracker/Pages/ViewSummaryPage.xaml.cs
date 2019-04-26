@@ -37,14 +37,25 @@ namespace WorkTracker.Pages
 
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
-                //var element = new TextBlock();
-                //element.Text = issue.Summary;
-
                 var element = new YoutrackIssue();
                 element.HeaderLabel.Content = issue.Summary;
                 element.DescriptionLabel.Content = issue.Description;
 
-                IssuePanel.Children.Add(element);
+                element.MaxHeight = 350;
+                element.MaxWidth = 180;
+
+                SummaryGrid.Children.Add(element);
+                Grid.SetColumn(element, 1);
+
+                var element2 = new YoutrackIssue();
+                element2.HeaderLabel.Content = issue.Summary;
+                element2.DescriptionLabel.Content = issue.Description;
+
+                element2.MaxHeight = 350;
+                element2.MaxWidth = 180;
+
+                SummaryGrid.Children.Add(element2);
+                Grid.SetColumn(element2, 2);
             });         
         }
     }
