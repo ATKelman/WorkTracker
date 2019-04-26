@@ -17,10 +17,10 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
-        <Button Content="P" Grid.Column="0" Height="50" 
-                Margin="5, 0, 5, 0" Click="PreviousButtonClick" />
+        <Button x:Name="PreviousButton" Content="P" Grid.Column="0" Height="50" 
+                Margin="5, 0, 5, 0" Click="ButtonPressed" Tag="-1"/>
       
-        <Button Content="N" Grid.Column="4" Height="50" 
-                Margin="5, 0, 5, 0" Click="NextButtonClick"/>
+        <Button x:Name="NextButton" Content="N" Grid.Column="4" Height="50" 
+                Margin="5, 0, 5, 0" Click="ButtonPressed" Tag="1"/>
     </Grid>
 </Page>

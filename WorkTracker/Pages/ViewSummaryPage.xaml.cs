@@ -46,7 +46,9 @@ namespace WorkTracker.Pages
         {
             youtrack = new Youtrack.Youtrack();
             issues = (IList<YouTrackSharp.Issues.Issue>)youtrack.GetIssues("#{Assigned to me}");
-            FillPage(0);
+
+            PreviousButton.IsEnabled = false;
+            FillPage(pageCounter);
         }
 
         private void FillPage(int pageCount)
@@ -74,15 +76,26 @@ namespace WorkTracker.Pages
             });
         }
 
-        private void PreviousButtonClick(object sender, RoutedEventArgs e)
+        private void ButtonPressed(object sender, RoutedEventArgs e)
         {
-            pageCounter = Math.Max((pageCounter - 1), 0);
-            FillPage(pageCounter);
-        }
+            var button = (Button)sender;
+            var change = int.Parse(button.Tag.ToString());
 
-        private void NextButtonClick(object sender, RoutedEventArgs e)
-        {
-            pageCounter++;
+            pageCounter = Math.Max((pageCounter + change), 0);
+
+            if (pageCounter == 0)
+            {
+                PreviousButton.IsEnabled = false;
+            }
+            else if ((pageCounter * 3) + 2 > issues.Count)
+            {
+                NextButton.IsEnabled = false;
+            }
+            else
+            {
+                PreviousButton.IsEnabled = true;
+                NextButton.IsEnabled = true;
+            }
             FillPage(pageCounter);
         }
     }
