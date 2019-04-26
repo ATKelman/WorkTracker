@@ -22,6 +22,8 @@ namespace WorkTracker.Pages
 
         private Dictionary<string, List<YouTrackSharp.Projects.CustomField>> projects;
 
+        private const int IssuesPerPage = 3;
+
         public ViewSummaryPage(int youtrackIssuesCount)
         {
             InitializeComponent();
@@ -71,9 +73,9 @@ namespace WorkTracker.Pages
         {
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < IssuesPerPage; i++)
                 {
-                    var issueCount = (pageCount * 3) + i;
+                    var issueCount = (pageCount * IssuesPerPage) + i;
                     if (issues.Count > issueCount)
                     {
                         displayIssues[i].MaxHeight = 350;
@@ -103,7 +105,7 @@ namespace WorkTracker.Pages
             {
                 PreviousButton.IsEnabled = false;
             }
-            else if ((pageCounter * 3) + 2 > issues.Count)
+            else if ((pageCounter * IssuesPerPage) + (IssuesPerPage - 1) > issues.Count)
             {
                 NextButton.IsEnabled = false;
             }
