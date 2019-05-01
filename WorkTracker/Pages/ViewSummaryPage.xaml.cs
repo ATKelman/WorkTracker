@@ -20,7 +20,7 @@ namespace WorkTracker.Pages
         private YoutrackIssue[] displayIssues;
         private int pageCounter = 0;
 
-        private Dictionary<string, List<Tuple<YouTrackSharp.Projects.CustomField, string >>> issuesFields;
+        private Dictionary<string, List<YouTrackSharp.Projects.CustomField>> projects;
 
         private const int IssuesPerPage = 3;
 
@@ -52,30 +52,19 @@ namespace WorkTracker.Pages
         private void YoutrackSetup()
         {
             youtrack = new Youtrack.Youtrack();
+
             issues = (IList<YouTrackSharp.Issues.Issue>)youtrack.GetIssues("#{Assigned to me}");
 
-            issuesFields = new Dictionary<string, List<Tuple<YouTrackSharp.Projects.CustomField, string>>>();
-
-            // Get all customField info for each issue  
+            // Get all unique projects
+            projects = new Dictionary<string, List<YouTrackSharp.Projects.CustomField>>();
             foreach (var issue in issues)
             {
-                if (issuesFields.ContainsKey(issue.Id))
+                var projectName = issue.GetField("projectShortName").Value.ToString();
+                if (projects.ContainsKey(projectName))
                     continue;
 
-                var projectName = issue.GetField("projectShortName").Value.ToString();
-
-                // Retrieve all CustomFields for the Project
-                var fields = new List<Tuple<YouTrackSharp.Projects.CustomField, string>>();
-
-                var customFields = (List<YouTrackSharp.Projects.CustomField>)youtrack.GetCustomFields(projectName);
-
-                foreach (var customField in customFields)
-                {
-                    var customFieldInfo = youtrack.GetIssueCustomField(projectName, customField.Name);
-                    fields.Add(new Tuple<YouTrackSharp.Projects.CustomField, string>(customField, customFieldInfo.Name));
-                }
-
-                issuesFields.Add(issue.Id, fields);
+                var projectCustomFields = (List<YouTrackSharp.Projects.CustomField>)youtrack.GetCustomFields(projectName);
+                projects.Add(projectName, projectCustomFields);
             }
 
             FillPage(pageCounter);
@@ -93,13 +82,25 @@ namespace WorkTracker.Pages
                         displayIssues[i].HeaderText.Text = issues[issueCount].Summary;
                         displayIssues[i].DescriptionText.Text = issues[issueCount].Description;
 
-                        //// Fill CustomFields 
+                        // Fill CustomFields 
                         displayIssues[i].IssueFields.Children.Clear();
 
-                        foreach (var field in issuesFields[issues[issueCount].Id])
+                        var projectName = issues[issueCount].GetField("projectShortName").Value.ToString();
+                        var test = projects[projectName];
+                        foreach (var field in projects[projectName])
                         {
                             var label = new Label();
-                            label.Content = string.Format("{0}: {1}", field.Item1.Name, field.Item2);
+                            var fieldValue = "";
+                            try
+                            {
+                                fieldValue = issues[issueCount].GetField(field.Name).ValueId.ToString();
+                            }
+                            catch (Exception ex)
+                            {
+                                // TODO Log
+                            }
+
+                            label.Content = $"{field.Name}: {fieldValue}";
 
                             displayIssues[i].IssueFields.Children.Add(label);
                         }
