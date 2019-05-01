@@ -90,15 +90,7 @@ namespace WorkTracker.Pages
                         foreach (var field in projects[projectName])
                         {
                             var label = new Label();
-                            var fieldValue = "";
-                            try
-                            {
-                                fieldValue = issues[issueCount].GetField(field.Name).ValueId.ToString();
-                            }
-                            catch (Exception ex)
-                            {
-                                // TODO Log
-                            }
+                            var fieldValue = GetFormattedCustomFieldValue(field.Name, issues[issueCount].GetField(field.Name));
 
                             label.Content = $"{field.Name}: {fieldValue}";
 
@@ -113,6 +105,23 @@ namespace WorkTracker.Pages
                     }
                 }
             });
+        }
+
+        // Formats CustomfFieldValue based customField DataType in the field value 
+        private string GetFormattedCustomFieldValue(string customFieldName, YouTrackSharp.Issues.Field field)
+        {
+            string customFieldValue;
+            try
+            {
+                customFieldValue = field.Value.ToString();
+            }
+            catch (Exception ex)
+            {
+                // TODO notify user or log 
+                customFieldValue = "[Missing]";
+            }
+
+            return customFieldValue;
         }
 
         private void ButtonPressed(object sender, RoutedEventArgs e)
