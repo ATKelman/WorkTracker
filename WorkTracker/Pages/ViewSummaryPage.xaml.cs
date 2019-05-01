@@ -20,7 +20,7 @@ namespace WorkTracker.Pages
         private YoutrackIssue[] displayIssues;
         private int pageCounter = 0;
 
-        private Dictionary<string, List<YouTrackSharp.Projects.CustomField>> projects;
+        private Dictionary<string, List<Tuple<YouTrackSharp.Projects.CustomField, string >>> issuesFields;
 
         private const int IssuesPerPage = 3;
 
@@ -54,19 +54,28 @@ namespace WorkTracker.Pages
             youtrack = new Youtrack.Youtrack();
             issues = (IList<YouTrackSharp.Issues.Issue>)youtrack.GetIssues("#{Assigned to me}");
 
-            projects = new Dictionary<string, List<YouTrackSharp.Projects.CustomField>>();
+            issuesFields = new Dictionary<string, List<Tuple<YouTrackSharp.Projects.CustomField, string>>>();
 
-            // Get all types of projects 
+            // Get all customField info for each issue  
             foreach (var issue in issues)
             {
-                var projectName = issue.GetField("projectShortName").Value.ToString();
-                if (projects.ContainsKey(projectName))
+                if (issuesFields.ContainsKey(issue.Id))
                     continue;
 
+                var projectName = issue.GetField("projectShortName").Value.ToString();
+
                 // Retrieve all CustomFields for the Project
+                var fields = new List<Tuple<YouTrackSharp.Projects.CustomField, string>>();
+
                 var customFields = (List<YouTrackSharp.Projects.CustomField>)youtrack.GetCustomFields(projectName);
 
-                projects.Add(projectName, customFields);
+                foreach (var customField in customFields)
+                {
+                    var customFieldInfo = youtrack.GetIssueCustomField(projectName, customField.Name);
+                    fields.Add(new Tuple<YouTrackSharp.Projects.CustomField, string>(customField, customFieldInfo.Name));
+                }
+
+                issuesFields.Add(issue.Id, fields);
             }
 
             FillPage(pageCounter);
@@ -83,6 +92,17 @@ namespace WorkTracker.Pages
                     {
                         displayIssues[i].HeaderText.Text = issues[issueCount].Summary;
                         displayIssues[i].DescriptionText.Text = issues[issueCount].Description;
+
+                        //// Fill CustomFields 
+                        displayIssues[i].IssueFields.Children.Clear();
+
+                        foreach (var field in issuesFields[issues[issueCount].Id])
+                        {
+                            var label = new Label();
+                            label.Content = string.Format("{0}: {1}", field.Item1.Name, field.Item2);
+
+                            displayIssues[i].IssueFields.Children.Add(label);
+                        }
 
                         displayIssues[i].Visibility = Visibility.Visible;
                     }

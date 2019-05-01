@@ -25,7 +25,9 @@
             </ScrollViewer>
         </Label>
 
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="2">
+            <StackPanel x:Name="IssueFields" Background="Honeydew" />
+        </ScrollViewer>
 
-        <DockPanel x:Name="IssueFields" Grid.Row="2" Background="Honeydew" />
     </Grid>
 </UserControl>
