@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\TimeReportPage.xaml.cs">
+      <DependentUpon>TimeReportPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\YoutrackIssue.xaml.cs">
       <DependentUpon>YoutrackIssue.xaml</DependentUpon>
     </Compile>
@@ -81,6 +84,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TimeReportPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

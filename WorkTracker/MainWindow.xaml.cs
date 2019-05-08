@@ -21,7 +21,7 @@ namespace WorkTracker
 
         private void changePage_EditCase(object sender, RoutedEventArgs e)
         {
-
+            MainContent.Content = new TimeReportPage();
         }
 
         private void changePage_ViewSummary(object sender, RoutedEventArgs e)

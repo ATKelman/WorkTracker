@@ -1,0 +1,50 @@
+﻿<Page x:Class="WorkTracker.Pages.TimeReportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WorkTracker.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TimeReportPage"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <Grid x:Name="TimeReportGrid" Background="LightBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        
+        <!--Issue-->
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold">
+            Issue: 
+        </Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="10, 10, 10, 10" Text="{Binding IssueName, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <!--Time-->
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold">
+            Time: 
+        </Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="10, 10, 10, 10" Text="{Binding TimeSpent, UpdateSourceTrigger=PropertyChanged}"/>
+        
+        <!--Comment-->
+        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Right" FontWeight="Bold" Margin="0, 10, 0, 0">
+            Comments:
+        </Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="10, 10, 10, 10" Text="{Binding Comments, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <!--Submit-->
+        <Border Grid.Row="3" Grid.Column="2" BorderBrush="#FF000000" BorderThickness="1" CornerRadius="10" Margin="5, 5, 5, 5" Background="LightGray">
+            <Button Foreground="Transparent" Background="Transparent" BorderBrush="Transparent" Click="SubmitPressed"></Button>
+        </Border>
+
+        
+    </Grid>
+</Page>

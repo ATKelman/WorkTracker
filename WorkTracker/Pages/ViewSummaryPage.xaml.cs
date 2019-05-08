@@ -9,9 +9,6 @@ using System.Collections;
 
 namespace WorkTracker.Pages
 {
-    /// <summary>
-    /// Interaction logic for ViewSummaryPage.xaml
-    /// </summary>
     public partial class ViewSummaryPage : Page
     {
         private Youtrack.Youtrack youtrack;
@@ -113,7 +110,7 @@ namespace WorkTracker.Pages
             string customFieldValue;
             try
             {
-                customFieldValue = field.Value.ToString();
+                customFieldValue = field.ValueId.ToString();
             }
             catch (Exception ex)
             {
