@@ -48,7 +48,7 @@ namespace WorkTrackerWpf
             }
             set
             {
-                if (currentPageViewModel != null)
+                if (currentPageViewModel != value)
                 {
                     currentPageViewModel = value;
                     OnPropertyChanged("CurrentPageViewModel");
