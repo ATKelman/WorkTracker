@@ -60,6 +60,7 @@ namespace WorkTrackerWpf
         {
             // Add avaliable pages
             PageViewModels.Add(new HomeViewModel());
+            PageViewModels.Add(new YoutrackIssueCreationViewModel());
 
             // Set starting page
             CurrentPageViewModel = PageViewModels[0];

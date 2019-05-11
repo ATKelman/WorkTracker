@@ -12,7 +12,11 @@
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
             <views:HomeView />
+        </DataTemplate>        
+        <DataTemplate DataType="{x:Type viewModels:YoutrackIssueCreationViewModel}">
+            <views:YoutrackIssueCreationView />
         </DataTemplate>
+
     </Window.Resources>
 
     <DockPanel>

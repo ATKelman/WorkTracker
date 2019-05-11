@@ -64,8 +64,12 @@
     <Compile Include="Utilities\Extensions\ActionExtensions.cs" />
     <Compile Include="Utilities\ObservableObject.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\YoutrackIssueCreationViewModel.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\YoutrackIssueCreationView.xaml.cs">
+      <DependentUpon>YoutrackIssueCreationView.xaml</DependentUpon>
     </Compile>
     <Page Include="ApplicationView.xaml">
       <SubType>Designer</SubType>
@@ -76,6 +80,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\YoutrackIssueCreationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
