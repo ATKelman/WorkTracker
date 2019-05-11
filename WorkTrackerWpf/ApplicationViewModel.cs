@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Input;
 using WorkTrackerWpf.Utilities;
+using WorkTrackerWpf.ViewModels;
 
 namespace WorkTrackerWpf
 {
@@ -58,8 +59,10 @@ namespace WorkTrackerWpf
         public ApplicationViewModel()
         {
             // Add avaliable pages
+            PageViewModels.Add(new HomeViewModel());
 
             // Set starting page
+            CurrentPageViewModel = PageViewModels[0];
         }
 
         private void ChangeViewModel(IPageViewModel viewModel)
