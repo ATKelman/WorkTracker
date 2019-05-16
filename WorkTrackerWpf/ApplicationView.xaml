@@ -16,19 +16,25 @@
         <DataTemplate DataType="{x:Type viewModels:YoutrackIssueCreationViewModel}">
             <views:YoutrackIssueCreationView />
         </DataTemplate>
+        <DataTemplate x:Key="MenuButton">
+            <Button Content="{Binding Path=Name}"
+                            Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                            CommandParameter="{Binding }"
+                            Margin="2,5" />
+        </DataTemplate>
     </Window.Resources>
 
     <DockPanel>
         <Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="0, 0, 1, 0">
-            <ItemsControl ItemsSource="{Binding PageViewModels}">
-                <ItemsControl.ItemTemplate>
+            <ItemsControl ItemsSource="{Binding PageViewModels}" ItemTemplate="{StaticResource MenuButton}">
+                <!--<ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Content="{Binding Name}"
+                        <Button Content="{Binding Path=Name}"
                             Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                             CommandParameter="{Binding }"
                             Margin="2,5" />
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                </ItemsControl.ItemTemplate>-->
             </ItemsControl>
         </Border>
 
