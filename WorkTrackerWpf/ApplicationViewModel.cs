@@ -24,7 +24,6 @@ namespace WorkTrackerWpf
             }
         }
 
-
         private List<IPageViewModel> pageViewModels;
         public List<IPageViewModel> PageViewModels
         {

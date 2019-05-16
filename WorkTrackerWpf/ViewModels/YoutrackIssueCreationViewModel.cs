@@ -13,7 +13,7 @@ namespace WorkTrackerWpf.ViewModels
         {
             get
             {
-                return "YoutrackIssueCreation Page";
+                return "Create Issue";
             }
         }
     }
