@@ -26,16 +26,7 @@
 
     <DockPanel>
         <Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="0, 0, 1, 0">
-            <ItemsControl ItemsSource="{Binding PageViewModels}" ItemTemplate="{StaticResource MenuButton}">
-                <!--<ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button Content="{Binding Path=Name}"
-                            Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                            CommandParameter="{Binding }"
-                            Margin="2,5" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>-->
-            </ItemsControl>
+            <ItemsControl ItemsSource="{Binding PageViewModels}" ItemTemplate="{StaticResource MenuButton}" />
         </Border>
 
         <ContentControl Content="{Binding CurrentPageViewModel}" />
